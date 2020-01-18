@@ -51,7 +51,7 @@ include_directories(
     ${SOURCE_DIR}/AdsLib
 )
 
-cs_add_library(${PROJECT_NAME}
+cs_add_library(AdsLib
     ${SOURCE_DIR}/AdsLib/AdsDef.cpp
     ${SOURCE_DIR}/AdsLib/AdsLib.cpp
     ${SOURCE_DIR}/AdsLib/AmsConnection.cpp
@@ -62,8 +62,14 @@ cs_add_library(${PROJECT_NAME}
     ${SOURCE_DIR}/AdsLib/NotificationDispatcher.cpp
     ${SOURCE_DIR}/AdsLib/Sockets.cpp
 )
-add_dependencies(${PROJECT_NAME} ads)
+add_dependencies(AdsLib ads)
 
 
 cs_install()
+
+install(DIRECTORY ${SOURCE_DIR}/AdsLib/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+        PATTERN ".cpp" EXCLUDE   
+)
+
 cs_export()
