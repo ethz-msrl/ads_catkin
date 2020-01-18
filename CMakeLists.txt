@@ -16,13 +16,54 @@ ExternalProject_Add(ads
     UPDATE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
+    BUILD_BYPRODUCTS 
+        <SOURCE_DIR>/AdsLib/AdsDef.cpp
+        <SOURCE_DIR>/AdsLib/AdsLib.cpp
+        <SOURCE_DIR>/AdsLib/AmsConnection.cpp
+        <SOURCE_DIR>/AdsLib/AmsPort.cpp
+        <SOURCE_DIR>/AdsLib/AmsRouter.cpp
+        <SOURCE_DIR>/AdsLib/Frame.cpp
+        <SOURCE_DIR>/AdsLib/Log.cpp
+        <SOURCE_DIR>/AdsLib/NotificationDispatcher.cpp
+        <SOURCE_DIR>/AdsLib/Sockets.cpp
+        <SOURCE_DIR>/AdsLib/AdsDef.h
+        <SOURCE_DIR>/AdsLib/AdsLib.h
+        <SOURCE_DIR>/AdsLib/AdsNotification.h
+        <SOURCE_DIR>/AdsLib/AmsConnection.h
+        <SOURCE_DIR>/AdsLib/AmsHeader.h
+        <SOURCE_DIR>/AdsLib/AmsPort.h
+        <SOURCE_DIR>/AdsLib/AmsRouter.h
+        <SOURCE_DIR>/AdsLib/Frame.h
+        <SOURCE_DIR>/AdsLib/Log.h
+        <SOURCE_DIR>/AdsLib/NotificationDispatcher.h
+        <SOURCE_DIR>/AdsLib/RingBuffer.h
+        <SOURCE_DIR>/AdsLib/Router.h
+        <SOURCE_DIR>/AdsLib/Semaphore.h
+        <SOURCE_DIR>/AdsLib/Sockets.h
+        <SOURCE_DIR>/AdsLib/wrap_endian.h
+        <SOURCE_DIR>/AdsLib/wrap_socket.h
 )
 
-ExternalProject_Get_Property(ads source_dir)
+ExternalProject_Get_Property(ads SOURCE_DIR)
 
-#cs_add_library(${PROJECT_NAME}
-#    ${source_dir}/AdsLib/AdsDef.cpp
-#)
+
+include_directories(
+    ${SOURCE_DIR}/AdsLib
+)
+
+cs_add_library(${PROJECT_NAME}
+    ${SOURCE_DIR}/AdsLib/AdsDef.cpp
+    ${SOURCE_DIR}/AdsLib/AdsLib.cpp
+    ${SOURCE_DIR}/AdsLib/AmsConnection.cpp
+    ${SOURCE_DIR}/AdsLib/AmsPort.cpp
+    ${SOURCE_DIR}/AdsLib/AmsRouter.cpp
+    ${SOURCE_DIR}/AdsLib/Frame.cpp
+    ${SOURCE_DIR}/AdsLib/Log.cpp
+    ${SOURCE_DIR}/AdsLib/NotificationDispatcher.cpp
+    ${SOURCE_DIR}/AdsLib/Sockets.cpp
+)
+add_dependencies(${PROJECT_NAME} ads)
+
 
 cs_install()
 cs_export()
