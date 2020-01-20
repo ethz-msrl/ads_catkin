@@ -68,8 +68,13 @@ add_dependencies(AdsLib ads)
 cs_install()
 
 install(DIRECTORY ${SOURCE_DIR}/AdsLib/
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-        PATTERN ".cpp" EXCLUDE   
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
+        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"  
 )
 
-cs_export()
+
+cs_export(
+    #INCLUDE_DIRS ${SOURCE_DIR}/AdsLib
+)
+
+#catkin_package(INCLUDE_DIRS ${SOURCE_DIR}/AdsLib)
