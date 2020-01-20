@@ -74,7 +74,5 @@ install(DIRECTORY ${SOURCE_DIR}/AdsLib/
 
 
 cs_export(
-    #INCLUDE_DIRS ${SOURCE_DIR}/AdsLib
+    INCLUDE_DIRS ${SOURCE_DIR}/AdsLib
 )
-
-#catkin_package(INCLUDE_DIRS ${SOURCE_DIR}/AdsLib)
