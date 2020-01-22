@@ -23,7 +23,7 @@
 #ifndef _ROUTER_H_
 #define _ROUTER_H_
 
-#include "AdsDef.h"
+#include "AdsLib/AdsDef.h"
 
 struct Router {
     static const size_t NUM_PORTS_MAX = 128;

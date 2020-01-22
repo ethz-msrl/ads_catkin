@@ -23,7 +23,7 @@
 #ifndef _ADSLIB_H_
 #define _ADSLIB_H_
 
-#include "AdsDef.h"
+#include "AdsLib/AdsDef.h"
 
 /**
  * Add new ams route to target system
@@ -63,6 +63,12 @@ long AdsPortOpenEx();
  * @return [ADS Return Code](http://infosys.beckhoff.de/content/1033/tc3_adsdll2/html/ads_returncodes.htm?id=17663)
  */
 long AdsGetLocalAddressEx(long port, AmsAddr* pAddr);
+
+/**
+ * Change local NetId
+ * @param[in] ams local AmsNetId
+ */
+void AdsSetLocalAddress(AmsNetId ams);
 
 /**
  * Reads data synchronously from an ADS server.

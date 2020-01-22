@@ -1,5 +1,5 @@
 /**
-   Copyright (c) 2015 - 2016 Beckhoff Automation GmbH & Co. KG
+   Copyright (c) 2015 - 2018 Beckhoff Automation GmbH & Co. KG
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,15 @@
    SOFTWARE.
  */
 
-#ifndef WRAP_SOCKET_H
-#define WRAP_SOCKET_H
+#pragma once
 
-#include <cstdint>
+#include <stdint.h>
 
-#if defined(__gnu_linux__) || defined(__APPLE__) || defined(__CYGWIN__)
+#if !(defined(_WIN32) && !defined(__CYGWIN__))
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
+#include <netdb.h>
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -50,6 +50,7 @@ inline int InitSocketLibrary(void)
 #else // defined(_WIN32) && !defined(__CYGWIN__)
 #define _WINSOCK_DEPRECATED_NO_WARNINGS 1
 #include <winsock2.h>
+#include <ws2tcpip.h>
 inline int InitSocketLibrary(void)
 {
     WSADATA wsaData;
@@ -65,4 +66,3 @@ typedef int socklen_t;
 #define CONNECTION_CLOSED WSAESHUTDOWN
 #define CONNECTION_ABORTED WSAECONNABORTED
 #endif
-#endif // WRAP_SOCKET_H

@@ -23,7 +23,7 @@
 #ifndef _AMS_ROUTER_H_
 #define _AMS_ROUTER_H_
 
-#include "AmsConnection.h"
+#include "AdsLib/AmsConnection.h"
 
 struct AmsRouter : Router {
     AmsRouter(AmsNetId netId = AmsNetId {});
@@ -31,27 +31,16 @@ struct AmsRouter : Router {
     uint16_t OpenPort();
     long ClosePort(uint16_t port);
     long GetLocalAddress(uint16_t port, AmsAddr* pAddr);
+    void SetLocalAddress(AmsNetId netId);
     long GetTimeout(uint16_t port, uint32_t& timeout);
     long SetTimeout(uint16_t port, uint32_t timeout);
-    long AddNotification(AmsRequest& request, uint32_t* pNotification, Notification& notify);
+    long AddNotification(AmsRequest& request, uint32_t* pNotification, std::shared_ptr<Notification> notify);
     long DelNotification(uint16_t port, const AmsAddr* pAddr, uint32_t hNotification);
 
     long AddRoute(AmsNetId ams, const IpV4& ip);
     void DelRoute(const AmsNetId& ams);
     AmsConnection* GetConnection(const AmsNetId& pAddr);
-
-    template<class T> long AdsRequest(AmsRequest& request)
-    {
-        if (request.bytesRead) {
-            *request.bytesRead = 0;
-        }
-
-        auto ads = GetConnection(request.destAddr.netId);
-        if (!ads) {
-            return GLOBALERR_MISSING_ROUTE;
-        }
-        return ads->AdsRequest<T>(request, ports[request.port - Router::PORT_BASE].tmms);
-    }
+    long AdsRequest(AmsRequest& request);
 
 private:
     AmsNetId localAddr;
@@ -61,7 +50,6 @@ private:
 
     std::map<IpV4, std::unique_ptr<AmsConnection> >::iterator __GetConnection(const AmsNetId& pAddr);
     void DeleteIfLastConnection(const AmsConnection* conn);
-    void Recv();
 
     std::array<AmsPort, NUM_PORTS_MAX> ports;
 };

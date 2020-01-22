@@ -25,8 +25,8 @@
 
 #define UNUSED(x) (void)(x)
 
-#include "AdsDef.h"
-#include "wrap_endian.h"
+#include "AdsLib/AdsDef.h"
+#include "AdsLib/wrap_endian.h"
 
 #include <array>
 #include <cstddef>
@@ -233,8 +233,6 @@ private:
     uint32_t leErrorCode;
     uint32_t leInvokeId;
 };
-
-using AoEWriteResponseHeader = uint32_t;
 
 struct AoEResponseHeader {
     AoEResponseHeader()
