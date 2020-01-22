@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
-<package format="2">
-    <name>ads_catkin</name>
-    <version>0.0.0</version>
-    <description>Catkin wrapper for ADS Beckhoff</description>
-    <maintainer email="jstiefel@ethz.ch">Julian Stiefel</maintainer>
-    
-    <license>see packages</license>
-    
-    <buildtool_depend>catkin</buildtool_depend>
-    <buildtool_depend>catkin_simple</buildtool_depend>
+<package>
+  <name>ads_catkin</name>
+  <version>0.0.0</version>
+  <description>The ads_catkin package</description>
+
+
+  <maintainer email="chautemc@ethz.ch">chautemc</maintainer>
+
+  <license>See Beckhoff</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
 </package>
