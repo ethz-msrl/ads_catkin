@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 2.8.3)
 project(ads_catkin)
 
 find_package(catkin_simple REQUIRED)
-catkin_simple()
+catkin_simple(ALL_DEPS_REQUIRED)
+
+add_definitions(-std=c++11 -Wall -Wextra)
 
 # From Cmake version 3.11 on, there is the module FetchContent which can be used instead of DownloadProject
 include(DownloadProject.cmake)
