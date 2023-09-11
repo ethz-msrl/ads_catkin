@@ -24,25 +24,41 @@ download_project(
     PROJ    ads
     PREFIX ${CATKIN_DEVEL_PREFIX}/ads
     GIT_REPOSITORY https://github.com/Beckhoff/ADS.git
-    GIT_TAG 6b3a03009a757cf651fe44d8be7b6df698028f0e
+    GIT_TAG 81a402053a19365ba546ec0dc29331b245f9eb71
     # GIT_TAG master
 )
 
+# file(COPY ${CATKIN_DEVEL_PREFIX}/ads/ads-src/AdsLib/standalone/ DESTINATION ${CATKIN_DEVEL_PREFIX}/ads/ads-src/AdsLib)
+# file(COPY ${CATKIN_DEVEL_PREFIX}/ads/ads-src/AdsLib/bhf/ DESTINATION ${CATKIN_DEVEL_PREFIX}/ads/ads-src/AdsLib)
+# file(COPY ${CATKIN_DEVEL_PREFIX}/ads/ads-src/AdsLib/TwinCAT/ DESTINATION ${CATKIN_DEVEL_PREFIX}/ads/ads-src/TwinCAT)
+
+add_definitions(-DCONFIG_DEFAULT_LOGLEVEL=1)
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
+
 include_directories(
     ${ads_SOURCE_DIR}
+    ${ads_SOURCE_DIR}/AdsLib/standalone  # Add this line
+    ${ads_SOURCE_DIR}/AdsLib/
 )
+
 
 cs_add_library(AdsLib
     ${ads_SOURCE_DIR}/AdsLib/AdsDef.cpp
     ${ads_SOURCE_DIR}/AdsLib/AdsLib.cpp
-    ${ads_SOURCE_DIR}/AdsLib/AmsConnection.cpp
-    ${ads_SOURCE_DIR}/AdsLib/AmsPort.cpp
-    ${ads_SOURCE_DIR}/AdsLib/AmsRouter.cpp
+    # ${ads_SOURCE_DIR}/AdsLib/TwinCAT/AdsLib.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/AmsConnection.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/AmsPort.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/AmsRouter.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/AdsLib.cpp
     ${ads_SOURCE_DIR}/AdsLib/Frame.cpp
     ${ads_SOURCE_DIR}/AdsLib/Log.cpp
-    ${ads_SOURCE_DIR}/AdsLib/NotificationDispatcher.cpp
+    ${ads_SOURCE_DIR}/AdsLib/AdsDevice.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/AmsNetId.cpp
+    ${ads_SOURCE_DIR}/AdsLib/standalone/NotificationDispatcher.cpp
     ${ads_SOURCE_DIR}/AdsLib/Sockets.cpp
 )
+
 
 cs_install()
 
@@ -50,6 +66,16 @@ install(DIRECTORY ${ads_SOURCE_DIR}/AdsLib/
         DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/AdsLib
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"  
 )
+
+install(DIRECTORY ${ads_SOURCE_DIR}/AdsLib/standalone
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/AdsLib
+        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"  
+)
+
+# install(DIRECTORY ${ads_SOURCE_DIR}/AdsLib/TwinCAT
+#         DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/AdsLib
+#         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"  
+# )
 
 cs_export(
     INCLUDE_DIRS ${ads_SOURCE_DIR}
